@@ -1,4 +1,3 @@
-
 // Plantilla de Service Worker
 
 
