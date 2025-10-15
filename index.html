@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi primera PWA </title>
+    <title>Mi primera PWA 2</title>
 
     <!-- vincular el manifest -->
-    <link rel="manifest" href="PWA-Ejemplo/manifest.json">
+    <link rel="manifest" href="PWA-Ejemplo2/manifest.json">
     <meta name="theme-color" content= "#231231">
 </head>
 <body>
@@ -23,9 +23,9 @@
 <script>
 
 if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("/pwaEjemplo/sw.js")
+    navigator.serviceWorker.register("pwaEjemplo2/sw.js")
     .then(reg=> console.log("service worker regtistrado"))
-    .catch(err => console.log("Error el registrar el service worker"))
+    .catch(err => console.log("Error el registrar el service worker", err))
 }
 
 </script>
