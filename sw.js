@@ -1,53 +1,67 @@
-// Plantilla de Service Worker
+// plantilla de servie worker
 
+// const { cache } = require("react");
 
-// 1. Nombre del caché y archivos a cachar
-const CACHE_NAME = "mi-pwa-cache-v1";
+// 1. el nombre del servicio y los archvios a cachear 
+
+const CACHE_NAME=   "Mi-pwa-cache-v1"
+
+const BASE_PATH="/pwaEjemplo/"
+
 const urlsToCache = [
-    '/',
-    'index.html',
-    'offline.html',
-    'style.css',
-    'icons/icon-192x192.png',
-    'icons/icon-512x512.png',
-];
+    `${BASE_PATH}index.html`,
+    `${BASE_PATH}style.css`,    
+    `${BASE_PATH}app.js`,
+    `${BASE_PATH}offline.html`,
+    `${BASE_PATH}icon/icon-192x192.png`,
+    `${BASE_PATH}icon/icon-512x512.png`
+]
 
-// 2. Install -> el evento que se ejecuta al instalar el sw
+// 2. install  -> el evento que se ejecuta al instalar el swe
+// se diapara la oprimera vez que se registra el service worker 
 self.addEventListener("install", event => {
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache =>cache.addAll(urlsToCache))
-    )
-})
+        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    );
 
-// 3. ACTIVATE -> este evento se ejecuta al activarse y debe limpiar cachés viejas
+});
+
+// 3. Activate ->  este evento se ejecuta al activarse 
+// debe limpiar caches vieja
+ // se dispara cuando el sw se activa ( esta en ejecucion)
 self.addEventListener("activate", event => {
     event.waitUntil(
-        caches.keys()
-            .then(keys => 
-                Promise.all(
-                    keys.filter(key => key !== CACHE_NAME)
-                        .map(key => caches.delete(key))
-                )
+        caches.keys().then(keys => 
+            Promise.all(
+                keys.filter(key => key !== CACHE_NAME)
+            .map(key=> caches.delete(key))
             )
-    )
-})
+        )
+    );
+}
+)
+// fetch -> intercepta las peticiones de la pwa,
 
-// 4. Fetch -> intercepta las peticiones de la pwa, intercambia cada petición de cadapágina de la pwa
-// busca primero en el cache, si el recurso no está, va a la red. Si la red falla, muestra la página offline.
+// Intercepta cada peticino de cada pagina de la pwa
+// busca primero el cache, y si el recurso no esta , va a la red 
+// si todo falla , muestra offline.hmtl
 self.addEventListener("fetch", event => {
     event.respondWith(
-        caches.match(event.request)
-            .then(cachedResponse => {
-                // Si el recurso está en caché, lo devuelve.
-                // Si no, intenta buscarlo en la red.
-                return cachedResponse || fetch(event.request).catch(() => {
-                    // Si la petición de red falla (ej. sin conexión), muestra la página offline.
-                    return caches.match('offline.html');
-                });
-            })
+      caches.match(event.request).then(response=> {
+        return response || fetch(event.request).catch(
+            ()=> caches.match(`${BASE_PATH}offline.html`)); 
+      })  
     );
 });
 
-// 5. PUSH -> notificaciones en segundo plano (opcional)
-// Esta parte parece correcta, no se necesitan cambios.
+
+// 5. PUSH ->  notificaciones en segundo plano (Opcional)
+
+self.addEventListener("push", event => {
+    const data = event.data ? event.data.text(): "Notificacion sin datos "
+    event.waitUntil(
+    self.registration.showNotification("MI PWA", {body: data})
+    )
+})
+
+ 
