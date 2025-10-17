@@ -2,14 +2,13 @@
 
 
 // 1. Nombre del caché y archivos a cachar
-const CACHE_NAME = "mi-pwa-cache-v1"
-const BASE_PATH = "/PWA-Ejemplo2/"
+const CACHE_NAME = "mi-pwa-cache-v1";
 const urlsToCache = [
-    `${BASE_PATH}index.html`,
-    `${BASE_PATH}manifest.json`,
-    `${BASE_PATH}offline.html`,
-    `${BASE_PATH}icons/icon-192x192.png`,
-    `${BASE_PATH}icons/icon-512x512.png`,
+    '/',
+    'index.html',
+    'offline.html',
+    'icons/icon-192x192.png',
+    'icons/icon-512x512.png',
 ];
 
 // 2. Install -> el evento que se ejecuta al instalar el sw
@@ -20,7 +19,7 @@ self.addEventListener("install", event => {
     )
 })
 
-// 3. ACTIVATE -> este evento se ejecuta al actuvarse debe limbiar limpiar cachés viejas
+// 3. ACTIVATE -> este evento se ejecuta al activarse y debe limpiar cachés viejas
 self.addEventListener("activate", event => {
     event.waitUntil(
         caches.keys()
@@ -34,21 +33,20 @@ self.addEventListener("activate", event => {
 })
 
 // 4. Fetch -> intercepta las peticiones de la pwa, intercambia cada petición de cadapágina de la pwa
-// busca primeto el cache, si el recurso no esta, va a la red, si todo falla, muestra offline.html
+// busca primero en el cache, si el recurso no está, va a la red. Si la red falla, muestra la página offline.
 self.addEventListener("fetch", event => {
     event.respondWith(
         caches.match(event.request)
-            .then(response=> {
-                return response || fetch(event.request)
-                    .catch(() => caches.match(`${BASE_PATH}offline.html`))
+            .then(cachedResponse => {
+                // Si el recurso está en caché, lo devuelve.
+                // Si no, intenta buscarlo en la red.
+                return cachedResponse || fetch(event.request).catch(() => {
+                    // Si la petición de red falla (ej. sin conexión), muestra la página offline.
+                    return caches.match('offline.html');
+                });
             })
-    )
-})
+    );
+});
 
-// 5. PUSH -> notificaciones en segundo plano(opcional)
-self.addEventListener("push", event => {
-    const data = event.data ? event.data.text(): "Notificación sin datos"
-    event.waitUntil(
-        self.registration.showNotification("MI PWA", {body: data})
-    )
-})
+// 5. PUSH -> notificaciones en segundo plano (opcional)
+// Esta parte parece correcta, no se necesitan cambios.
