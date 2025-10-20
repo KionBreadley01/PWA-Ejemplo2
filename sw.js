@@ -4,17 +4,19 @@
 
 // 1. el nombre del servicio y los archvios a cachear 
 
-const CACHE_NAME = "Mi-pwa-cache-v1";
-const BASE_PATH = "./";
+const CACHE_NAME=   "Mi-pwa-cache-v1"
+
+const BASE_PATH="/PWA-Ejemplo2/"
 
 const urlsToCache = [
-  `${BASE_PATH}index.html`,
-  `${BASE_PATH}style.css`,
-  `${BASE_PATH}app.js`,
-  `${BASE_PATH}offline.html`,
-  `${BASE_PATH}icons/icon-192x192.png`,
-  `${BASE_PATH}icons/icon-512x512.png`
-];
+    `${BASE_PATH}index.html`,
+    `${BASE_PATH}style.css`,    
+    `${BASE_PATH}app.js`,
+    `${BASE_PATH}offline.html`,
+    // corregir carpeta a 'icons' para que coincida con manifest.json
+    `${BASE_PATH}icons/icon-192x192.png`,
+    `${BASE_PATH}icons/icon-512x512.png`
+]
 
 // 2. install  -> el evento que se ejecuta al instalar el swe
 // se diapara la oprimera vez que se registra el service worker 

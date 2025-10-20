@@ -6,9 +6,10 @@
     <title>Mi primera PWA </title>
 
     <!-- vincular el manifest -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content= "#231231">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="/PWA-Ejemplo2/manifest.json">
+    <meta name="theme-color" content="#231231">
+    <!-- usar ruta absoluta para evitar problemas en GitHub Pages -->
+    <link rel="stylesheet" href="/PWA-Ejemplo2/style.css">
 </head>
 <body>
 
@@ -19,22 +20,18 @@
     <button onclick ="alert('hola XD')">Click here </button>
 
     <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="login.html">Iniciar Sesión</a></li>
+        <li><a href="/PWA-Ejemplo2/index.html">Inicio</a></li>
+        <li><a href="/PWA-Ejemplo2/login.html">Iniciar Sesión</a></li>
     </ul>
     
-
-<!-- registrat eñ service worker -->
-
-<script>
-
-if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("sw.js")
-    .then(reg=> console.log("service worker regtistrado"))
-    .catch(err => console.log("Error el registrar el service worker"))
-}
-
-</script>
+    <!-- registrat eñ service worker -->
+    <script>
+    if("serviceWorker" in navigator){
+        navigator.serviceWorker.register("/PWA-Ejemplo2/sw.js")
+        .then(reg=> console.log("service worker registrado"))
+        .catch(err => console.log("Error al registrar el service worker", err))
+    }
+    </script>
 
 
 </body>
