@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi primera PWA </title>
+    <title>Mi primera PWA</title>
 
-    <!-- vincular el manifest -->
-    <link rel="manifest" href="/PWA-Ejemplo2/manifest.json">
-    <meta name="theme-color" content="#231231">
-    <!-- usar ruta absoluta para evitar problemas en GitHub Pages -->
-    <link rel="stylesheet" href="/PWA-Ejemplo2/style.css">
+    <!-- Opcional -->
+    <!-- <base href="/PWA-ejemplo/"> -->
+
+    <!-- Vincular el manifiest -->
+    <link rel="manifest" href="./manifest.json">
+
+    <!-- color de la bara de navegación en móviles -->
+    <meta name="theme-color" content="#2196f3">
 </head>
 <body>
-
-
-    <h1>Bienvenido a mi PWA</h1>
-    <p> se puede instalar como aplicacion en tu celular</p>
-    
-    <button onclick ="alert('hola XD')">Click here </button>
+    <h1>Bienvenido a mi primera PWA </h1>
+    <p>Se puede instalar como aplicacion en tu celular </p>
+    <button 
+        onclick="alert('Hola desde la PWA')"
+    > Presiona aquí</button>
 
     <ul>
         <li><a href="/PWA-Ejemplo2/index.html">Inicio</a></li>
         <li><a href="/PWA-Ejemplo2/login.html">Iniciar Sesión</a></li>
     </ul>
-    
-    <!-- registrat eñ service worker -->
+
+    <!-- Registrar el Sevice Worker -->
     <script>
-    if("serviceWorker" in navigator){
-        navigator.serviceWorker.register("/PWA-Ejemplo2/sw.js")
-        .then(reg=> console.log("service worker registrado"))
-        .catch(err => console.log("Error al registrar el service worker", err))
-    }
+        if('serviceWorker' in navigator){
+            navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker registrado'))
+            .catch(err => console.log('Service Worker no registrado', err))
+        }
     </script>
-
-
 </body>
 </html>
